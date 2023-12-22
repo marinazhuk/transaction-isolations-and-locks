@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: admin
+    ports:
+      - '5432:5432'
+    volumes:
+      - .data_postgres:/var/lib/postgresql/data
+      - ./postgre_scripts/schema_postgre.sql:/docker-entrypoint-initdb.d/schema_postgre.sql
+
+  percona:
+    image: percona
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+    ports:
+      - '3306:3306'
+    volumes:
+      - .data_percona:/var/lib/mysql
+      - ./percona_scripts/schema_percona.sql:/docker-entrypoint-initdb.d/1.sql
+
+volumes:
+  .data_percona:
+  .data_postgres:
